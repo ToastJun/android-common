@@ -1,4 +1,4 @@
-package com.toast.core;
+package com.toast.core.base;
 
 import android.app.Application;
 
