@@ -3,6 +3,7 @@ package com.toast.core.base;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -11,7 +12,7 @@ import android.widget.EditText;
 import com.toast.common.utils.KeyboardUtils;
 import com.toast.core.manager.ActivityStack;
 
-public class WAbsActivity extends Activity {
+public class WAbsActivity extends AppCompatActivity {
 
     //屏蔽home键标志
     public static final int FLAG_HOMEKEY_DISPATCHED = 0x80000000;

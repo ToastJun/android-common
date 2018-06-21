@@ -12,7 +12,7 @@ import com.orhanobut.logger.PrettyFormatStrategy;
 public class L {
     private static boolean isDebug = true;
 
-    public static void init() {
+    public static void init(boolean debug) {
         // 自定义输出格式
         PrettyFormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
                 .showThreadInfo(false)
@@ -21,6 +21,7 @@ public class L {
                 .tag("My custom tag")
                 .build();
         Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
+        isDebug = debug;
     }
 
     public static void v(String msg) {

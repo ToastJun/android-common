@@ -2,9 +2,10 @@ package com.toast.core.base;
 
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,14 +14,19 @@ import android.view.inputmethod.InputMethodManager;
 import com.toast.common.utils.KeyboardUtils;
 import com.toast.core.log.L;
 
-import java.security.Key;
 import java.util.List;
+
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+import rx.internal.util.SubscriptionList;
 
 public abstract class WBaseFragment<V extends WIBaseView, T extends WBasePresenter<V>> extends Fragment {
 
     private View rootView;
 
     private boolean mIsShow = false;
+
+    private Unbinder unbinder;
 
     public abstract int getLayoutID();
 
@@ -37,6 +43,8 @@ public abstract class WBaseFragment<V extends WIBaseView, T extends WBasePresent
 
     protected Context mActivityContext;
 
+    public SubscriptionList subscriptionList;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +52,8 @@ public abstract class WBaseFragment<V extends WIBaseView, T extends WBasePresent
         mPresenter = createPresenter();
         // 内存泄漏 关联view
         mPresenter.attachView((V) this);
-//        mActivityContext = getContext();
+        subscriptionList = new SubscriptionList();
+        mActivityContext = getContext();
 
         L.i("创建Fragment=====" + getClass().getSimpleName());
     }
@@ -54,7 +63,7 @@ public abstract class WBaseFragment<V extends WIBaseView, T extends WBasePresent
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(getLayoutID(), null);
 
-//        bind = ButterKnife.bind(this, rootView)
+        unbinder = ButterKnife.bind(this, rootView);
         return rootView;
     }
 
@@ -68,11 +77,11 @@ public abstract class WBaseFragment<V extends WIBaseView, T extends WBasePresent
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-//        bind.unbind();
+        unbinder.unbind();
         // 解绑view
         mPresenter.detachView();
         // 解除订阅关系
-
+        subscriptionList.unsubscribe();
         L.i("销毁fragment: " + getClass().getSimpleName());
     }
 

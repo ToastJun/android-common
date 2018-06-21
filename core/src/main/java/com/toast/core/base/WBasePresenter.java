@@ -2,14 +2,16 @@ package com.toast.core.base;
 
 import com.toast.core.log.L;
 
+import rx.internal.util.SubscriptionList;
+
 public abstract class WBasePresenter<V extends WIBaseView> {
 
     public V mView;
+    public SubscriptionList mSubscriptionList;
 
     public void attachView(V view) {
         this.mView = view;
-        // TODO: 2018/6/19 sub
-
+        mSubscriptionList = new SubscriptionList();
     }
 
     public void detachView() {

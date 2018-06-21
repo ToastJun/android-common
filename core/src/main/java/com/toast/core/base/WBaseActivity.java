@@ -7,7 +7,12 @@ import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.toast.core.log.L;
+
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+import rx.internal.util.SubscriptionList;
 
 /**
  * Activity基类 所有的应用中的activity都应该继承该类
@@ -18,7 +23,7 @@ import com.toast.core.log.L;
  */
 public abstract class WBaseActivity<V extends WIBaseView, T extends WBasePresenter<V>> extends WAbsActivity{
 
-//    private Unbinder
+    private Unbinder unbinder;
 
     /**
      * 返回布局文件id
@@ -36,6 +41,13 @@ public abstract class WBaseActivity<V extends WIBaseView, T extends WBasePresent
     protected Context mBaseActivity;
 
     protected Context mApplicationContext;
+
+    /**
+     * 订阅者容器
+     * 将activity中的订阅者都放入此容器中
+     * 防止内存泄漏
+     */
+    protected SubscriptionList mSubscriptionList;
 
     /**
      * presenter 不能为空
@@ -56,7 +68,7 @@ public abstract class WBaseActivity<V extends WIBaseView, T extends WBasePresent
             return;
         }
         //
-//        ARouter.getInstance().inject(this)
+        ARouter.getInstance().inject(this);
 
         // 沉浸式statusbar
         if (Build.VERSION.SDK_INT >= 21) {
@@ -68,7 +80,7 @@ public abstract class WBaseActivity<V extends WIBaseView, T extends WBasePresent
 
         beforeSetContentView();
         setContentView(getLayoutID());
-//        unbinder = ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
 
         // 创建Presenter
         mPresenter = createPresenter();
@@ -92,15 +104,17 @@ public abstract class WBaseActivity<V extends WIBaseView, T extends WBasePresent
     @Override
     protected void onDestroy() {
         // 解除 butterknife绑定
-//        if (unbinder != null) {
-//            unbinder.unbind();
-//        }
+        if (unbinder != null) {
+            unbinder.unbind();
+        }
         // 解除presenter和view的绑定
         if (mPresenter != null) {
             mPresenter.detachView();
         }
         // 解除观察者的订阅关系
-
+        if (mSubscriptionList != null) {
+            mSubscriptionList.unsubscribe();
+        }
         L.i("退出activity===== " + getClass().getSimpleName());
         super.onDestroy();
     }
