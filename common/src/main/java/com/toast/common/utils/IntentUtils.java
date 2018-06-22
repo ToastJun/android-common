@@ -10,7 +10,7 @@ import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.webkit.MimeTypeMap;
 
-import com.hzecool.common.BuildConfig;
+import com.toast.common.BuildConfig;
 
 import java.io.File;
 

@@ -8,7 +8,7 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.widget.TextView;
 
-import com.hzecool.common.R;
+import com.toast.common.R;
 
 /**
  * 倒计时工具类

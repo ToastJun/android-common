@@ -1,9 +1,11 @@
 package com.toast.summary.utils.image;
 
+import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
-import com.bumptech.glide.DrawableTypeRequest;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestBuilder;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.io.File;
 
@@ -28,11 +30,12 @@ public class GlideImageLoader implements ImageLoaderWrapper{
         displayImage(imageView, url, null);
     }
 
-    private void genericDisplayImage(DrawableTypeRequest request, ImageView imageView, DisplayOptions displayOptions) {
+    private void genericDisplayImage(RequestBuilder<Drawable> request, ImageView imageView, DisplayOptions displayOptions) {
         if (displayOptions != null) {
-            request.error(displayOptions.errorResId)
-                    .placeholder(displayOptions.loadingResId)
-                    .into(imageView);
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions.error(displayOptions.errorResId)
+                    .placeholder(displayOptions.loadingResId);
+            request.apply(requestOptions).into(imageView);
         } else {
             request.into(imageView);
         }

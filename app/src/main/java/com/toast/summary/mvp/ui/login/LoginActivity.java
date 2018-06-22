@@ -11,33 +11,33 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.toast.summary.MainActivity;
+import com.toast.summary.main.MainActivity;
 import com.toast.summary.R;
 import com.toast.summary.mvp.interactor.login.LoginInteractorImpl;
 import com.toast.summary.mvp.presenter.login.LoginPresenter;
 import com.toast.summary.mvp.presenter.login.LoginPresenterImpl;
 import com.toast.summary.mvp.view.login.LoginView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class LoginActivity extends AppCompatActivity implements LoginView, View.OnClickListener {
 
-    @Bind(R.id.navbar_back)
+    @BindView(R.id.navbar_back)
     ImageView navbarBack;
-    @Bind(R.id.et_phone)
+    @BindView(R.id.et_phone)
     EditText etPhone;
-    @Bind(R.id.et_pwd)
+    @BindView(R.id.et_pwd)
     EditText etPwd;
-    @Bind(R.id.img_pwd_eye)
+    @BindView(R.id.img_pwd_eye)
     ImageView imgPwdEye;
-    @Bind(R.id.btn_login)
+    @BindView(R.id.btn_login)
     TextView btnLogin;
-    @Bind(R.id.login_progress)
+    @BindView(R.id.login_progress)
     ProgressBar loginProgress;
-    @Bind(R.id.tv_phone_error)
+    @BindView(R.id.tv_phone_error)
     TextView tvPhoneError;
-    @Bind(R.id.tv_password_error)
+    @BindView(R.id.tv_password_error)
     TextView tvPasswordError;
 
     private LoginPresenter mLoginPresenter;

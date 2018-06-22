@@ -4,11 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.StringRes;
 import android.text.TextUtils;
-import android.view.ViewGroup;
 import android.widget.Toast;
-
-import com.swifty.toptoastbar.BottomToast;
-import com.swifty.toptoastbar.TopToast;
 
 import static android.widget.Toast.makeText;
 
@@ -300,27 +296,5 @@ public class ToastUtils {
             sToast.cancel();
             sToast = null;
         }
-    }
-
-    /**
-     * 顶部显示通知信息
-     *
-     * @param viewGroup
-     * @param content  内容
-     * @param time     时间
-     */
-    public static void showTopToast(ViewGroup viewGroup, String content, long time) {
-        TopToast.make(viewGroup, content, time).show();
-    }
-
-    /**
-     * 底部显示通知信息
-     *
-     * @param viewGroup
-     * @param content  内容
-     * @param time     时间
-     */
-    public static void showBottomToast(ViewGroup viewGroup, String content, long time) {
-        BottomToast.make(viewGroup, content, time).show();
     }
 }

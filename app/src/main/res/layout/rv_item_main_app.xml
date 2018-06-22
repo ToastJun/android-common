@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <com.allen.library.SuperTextView
+        android:id="@+id/stv_content"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_alignParentRight="true"
+        app:sCenterTextColor="#fff"
+        app:sBackgroundDrawableRes="@color/colorAccent"
+        app:sCenterTextString="点我点我"
+        app:sShapeCornersRadius="20dp"
+        android:layout_margin="12dp"
+        android:layout_centerVertical="true"
+        />
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/riv_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/stv_content"
+        android:src="@drawable/bg_app_main_nvwang"
+        android:scaleType="centerCrop"
+        app:riv_corner_radius="10dp"
+        />
+
+</RelativeLayout>

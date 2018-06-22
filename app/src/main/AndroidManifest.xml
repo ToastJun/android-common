@@ -3,13 +3,14 @@
     package="com.toast.summary">
 
     <application
+        android:name="com.toast.core.base.BaseApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
-        <activity android:name=".MainActivity" />
-        <activity android:name=".mvp.ui.login.LoginActivity">
+        <activity android:name=".main.MainActivity" />
+        <activity android:name=".vp.welcome.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,6 +18,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".mvp.ui.home.HomeActivity" />
+
+        <activity android:name=".mvp.ui.login.LoginActivity" />
+
     </application>
 
 </manifest>
