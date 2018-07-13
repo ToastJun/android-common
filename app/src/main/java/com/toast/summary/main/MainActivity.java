@@ -1,18 +1,17 @@
 package com.toast.summary.main;
 
-import android.os.Bundle;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.toast.app.wanandroid.data.ARouterUrl;
-import com.toast.common.utils.AppUtils;
 import com.toast.core.base.WBaseActivity;
-import com.toast.core.base.WBasePresenter;
 import com.toast.summary.R;
 import com.toast.summary.bean.MainAppBean;
 import com.toast.summary.main.adapter.MainAdapter;
@@ -51,9 +50,21 @@ public class MainActivity extends WBaseActivity<IMainView, MainPresenter<IMainVi
     @Override
     public void blowUpItemImage(View view) {
         // 对view做放大透明度的动画
-        Animation animation = AnimationUtils.loadAnimation(this, R.anim.main_blowup_alpha);
-        view.setAnimation(animation);
-        animation.start();
+        ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(view, "scaleX", 1.0f, 4.0f);
+        ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(view, "scaleY", 1.0f, 4.0f);
+        ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(view, "alpha", 1.0f, 0.5f);
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(scaleXAnimator, scaleYAnimator, alphaAnimator);
+        animatorSet.setDuration(1000);
+        animatorSet.start();
+        animatorSet.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                
+            }
+        });
     }
 
     @Override

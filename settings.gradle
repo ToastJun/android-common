@@ -1,1 +1,2 @@
-include ':app', ':common', ':core', ':mmine', ':widget', ':mapp', ':bluetooth'
+include ':app', ':common', ':core', ':mmine', ':widget', ':mapp', ':bluetooth', ':wanandroid'
+

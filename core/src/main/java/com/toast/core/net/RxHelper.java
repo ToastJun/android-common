@@ -3,9 +3,11 @@ package com.toast.core.net;
 import android.util.Log;
 
 import com.toast.core.net.bean.BaseNetBean;
+import com.toast.core.net.bean.BaseWANetBean;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -29,6 +31,29 @@ public class RxHelper {
                     }
                 }
         ).compose(switchSchedulers());
+    }
+
+    /**
+     * 将 wandnroid 网络数据结构 转换成其中的 data
+     * @param <T>
+     * @return
+     */
+    public static <T> Observable.Transformer<BaseWANetBean<T>, T> handleWAResult() {
+        return new Observable.Transformer<BaseWANetBean<T>, T>(){
+            @Override
+            public Observable<T> call(Observable<BaseWANetBean<T>> baseWANetBeanObservable) {
+                return baseWANetBeanObservable.flatMap(new Func1<BaseWANetBean<T>, Observable<T>>() {
+                    @Override
+                    public Observable<T> call(BaseWANetBean<T> tBaseWANetBean) {
+                        if (tBaseWANetBean.errorCode >= 0) {
+                            return createData(tBaseWANetBean.data);
+                        } else {
+                            return Observable.error(new Exception(tBaseWANetBean.errorMsg));
+                        }
+                    }
+                });
+            }
+        };
     }
 
     private static <T> Observable<T> createData(final T data){
